@@ -50,46 +50,55 @@ function args() {
 
     while [[ $# -ne 0 ]]; do
         case "$1" in
+
             -f | --file )
                 [[ $# -lt 2 ]] && { Wrong; exit 1; }
                 filename="$2"
                 shift 2
                 ;;
+
             -h | --help )
                 Help
                 exit 0
                 ;;
-            -* )
-                Wrong
-                exit 1
-                ;;
-            * )
-                action="$1"
+
+            listar )
+                action=list
                 shift
                 action_args="$@"
                 ;;
+
+            filtrar )
+                [[ $# -lt 2 ]] && { Wrong; exit 1; }
+                action=filter
+                shift
+                action_args="$@"
+                ;;
+
+            agregar )
+                [[ $# -lt 4 ]] && { Wrong; exit 1; }
+                action=add
+                shift
+                action_args="$@"
+                ;;
+
+            borrar )
+                [[ $# -lt 3 ]] && { Wrong; exit 1; }
+                action=delete
+                shift
+                action_args="$@"
+                ;;
+
+            * )
+                Wrong
+                exit 1
+                ;;
+
         esac
     done
 }
 
 # ===== Specific functionality =====
-
-function act() {
-    case "$1" in
-        list )
-            list
-            ;;
-        filter )
-            filter $@
-            ;;
-        add )
-            add $@
-            ;;
-        delete )
-            delete $@
-            ;;
-    esac
-}
 
 function list() {
     cat $filename
@@ -109,4 +118,4 @@ action=""
 action_args=""
 
 args "$@"
-act $action "$action_args"
+$action "$action_args"
