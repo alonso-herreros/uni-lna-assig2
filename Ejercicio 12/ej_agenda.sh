@@ -13,7 +13,7 @@ Opciones:
                         es 'agenda.txt'
 
 Acciones:
-    listar      
+    listar
         Lista el contenido de la agenda, segun el formato
         'n:dd/mm/yy Evento Comentario'
         donde 'n' es el numero de registro dentro del fichero
