@@ -43,16 +43,18 @@ function Wrong() {
 
 # ===== Argument parsing =====
 
-function main() {
-    # Parses args and acts on options and action.
+function args() {
+    # Parses args. May exit on errors or if the --help option is passed
+    [[ $# -eq 0 ]] && { Wrong; exit 1; }
+
     while [[ $# -ne 0 ]]; do
         case "$1" in
-            -f | --file)
-                [[ $# -lt 2 ]] && { Wrong; exit 1 }
+            -f | --file )
+                [[ $# -lt 2 ]] && { Wrong; exit 1; }
                 filename="$2"
                 shift 2
                 ;;
-            -h | --help)
+            -h | --help )
                 Help
                 exit 0
                 ;;
@@ -60,27 +62,33 @@ function main() {
                 Wrong
                 exit 1
                 ;;
-            listar )
-                list
-                ;;
-            fecha )
-                filter $@
-                ;;
-            agregar )
-                add $@
-                ;;
-            borrar )
-                delete $@
-                ;;
             * )
-                Wrong;
-                exit 2
+                action="$1"
+                shift
+                action_args="$@"
                 ;;
         esac
     done
 }
 
 # ===== Specific functionality =====
+
+function act() {
+    case "$1" in
+        list )
+            list
+            ;;
+        filter )
+            filter $@
+            ;;
+        add )
+            add $@
+            ;;
+        delete )
+            delete $@
+            ;;
+    esac
+}
 
 function list() {
     cat $filename
@@ -99,4 +107,5 @@ filename=$DEFAULT_FILENAME
 action=""
 action_args=""
 
-main "$@"
+args "$@"
+act $action "$action_args"
