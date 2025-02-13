@@ -95,7 +95,7 @@ function list() {
 }
 
 function filter() {
-    [[ $# -lt 1 ]] && { echo "Internal error"; exit 1 }
+    [[ $# -lt 1 ]] && { echo "Internal error"; exit 1; }
 
     list | grep "$1"
 }
