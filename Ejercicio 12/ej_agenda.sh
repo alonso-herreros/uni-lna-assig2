@@ -25,11 +25,12 @@ Acciones:
         Añade un nuevo evento con la información dada. La fecha debe estar
         en formato dd/mm/yy.
 
-    borrar fecha <dd/mm/yy>
-        Elimina todos los registros correspondientes a una fecha
+    borrar fecha <fecha>
+        Elimina todos los registros correspondientes a una fecha en formato
+        dd/mm/yy.
 
     borrar registro <n>
-        elimina el registro cuyo número es <n>
+        Elimina el registro cuyo número es <n>
 "
 
 function Help() {
