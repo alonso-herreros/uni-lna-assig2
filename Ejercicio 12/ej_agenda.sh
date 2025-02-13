@@ -110,6 +110,14 @@ function filter() {
     list | grep "$1"
 }
 
+function add() {
+    echo "Not yet implemented"
+}
+
+function delete() {
+    echo "Not yet implemented"
+}
+
 # ===== Main flow =====
 
 # Variables
