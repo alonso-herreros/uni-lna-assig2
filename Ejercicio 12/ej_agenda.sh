@@ -38,8 +38,7 @@ function Help() {
 }
 
 function Wrong() {
-    echo "No está claro lo que querías hacer."
-    echo "Prueba a usar '$0 --help'"
+    echo "Uso incorrecto. Prueba a usar '$0 --help'"
 }
 
 # ===== Argument parsing =====
