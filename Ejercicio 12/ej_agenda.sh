@@ -9,8 +9,8 @@ Uso: $0 [OPCIONES] <ACCIÓN> [<ARGUMENTOS>]
        $0 -h
 
 Opciones:
-   -f, --file=FICHERO   Utiliza el fichero especificado. Por defecto el fichero
-                        es 'agenda.txt'
+  -f, --file <FICHERO>      Utiliza el fichero especificado. Por defecto el
+                            fichero es 'agenda.txt'
 
 Acciones:
     listar
