@@ -112,11 +112,8 @@ function add() {
     [[ $# -eq 3 ]] && validate_date "$1" || Wrong_exit
     touch "$filename" || FileError_exit
 
-    date="$1"
-    event="$2"
-    comment="$3"
-
-    echo "$date;$event;$comment" >> "$filename"
+    # Date;Event;Comment
+    echo "$1;$2;$3" >> "$filename"
 }
 
 function delete() {
