@@ -51,6 +51,15 @@ function Wrong_exit() {
     exit 1
 }
 
+function FileError() {
+    echo "El fichero '$filename' no existe o no tienes permiso de escritura."
+}
+
+function FileError_exit() {
+    FileError
+    exit 1
+}
+
 # ===== Argument parsing =====
 
 function args() {
@@ -118,6 +127,8 @@ action=""
 action_args=""
 
 args "$@"
+
+[[ -w "$filename" ]] || FileError_exit
 
 case $action in
     listar )  action_function=list ;;
