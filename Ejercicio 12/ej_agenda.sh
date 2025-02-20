@@ -71,31 +71,11 @@ function args() {
                 exit 0
                 ;;
 
-            listar )
-                action=list
+            listar | filtrar | agregar | borrar )
+                action="$1"
                 shift
                 action_args="$@"
-                ;;
-
-            filtrar )
-                [[ $# -lt 2 ]] && Wrong_exit
-                action=filter
-                shift
-                action_args="$@"
-                ;;
-
-            agregar )
-                [[ $# -lt 4 ]] && Wrong_exit
-                action=add
-                shift
-                action_args="$@"
-                ;;
-
-            borrar )
-                [[ $# -lt 3 ]] && Wrong_exit
-                action=delete
-                shift
-                action_args="$@"
+                break
                 ;;
 
             * )
@@ -121,6 +101,7 @@ function filter() {
 }
 
 function add() {
+    [[ $# -lt 3 ]] && Wrong_exit
     echo "Not yet implemented"
 }
 
@@ -141,4 +122,13 @@ action=""
 action_args=""
 
 args "$@"
-$action "$action_args"
+
+case $action in
+    listar )  $action_function=list ;;
+    filtrar ) $action_function=filter ;;
+    agregar ) $action_function=add ;;
+    borrar )  $action_function=delete ;;
+    * ) Wrong_exit ;;
+esac
+
+$action_function "$action_args"
