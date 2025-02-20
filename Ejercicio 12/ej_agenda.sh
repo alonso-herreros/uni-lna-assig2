@@ -107,14 +107,14 @@ function filter() {
 }
 
 function add() {
-    [[ $# -eq 3 ]] || Wrong_exit
+    # Used to check both separately, but they give the same error anyway
+    # Thank you, operator precedence
+    [[ $# -eq 3 ]] && validate_date "$1" || Wrong_exit
     touch "$filename" || FileError_exit
 
     date="$1"
     event="$2"
     comment="$3"
-
-    validate_date $date || Wrong_exit
 
     echo "$date;$event;$comment" >> "$filename"
 }
