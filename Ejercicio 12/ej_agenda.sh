@@ -142,7 +142,7 @@ args "$@"
 # Resolve action 'names' to their functions, and call them
 case $action in
     listar  ) list;;
-    filtrar ) filter "${action_args[@]}";;
+    fecha   ) filter "${action_args[@]}";;
     agregar ) add    "${action_args[@]}";;
     borrar  ) delete "${action_args[@]}";;
 
