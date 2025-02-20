@@ -96,8 +96,7 @@ function args() {
 function list() {
     [[ -r "$filename" ]] || FileError_exit
 
-    cat $filename
-    # TODO: prettify output
+    cat $filename | sed 's/;/\t/g'
 }
 
 function filter() {
