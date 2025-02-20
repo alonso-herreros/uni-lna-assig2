@@ -52,7 +52,7 @@ function Wrong_exit() {
 }
 
 function FileError() {
-    echo "El fichero '$filename' no existe o no tienes permiso de escritura."
+    echo "El fichero '$filename' no existe o no tienes los permisos necesarios"
 }
 
 function FileError_exit() {
@@ -95,23 +95,29 @@ function args() {
 # ===== Specific functionality =====
 
 function list() {
+    [[ -r "$filename" ]] || FileError_exit
+
     cat $filename
     # TODO: prettify output
 }
 
 function filter() {
+    [[ -r "$filename" ]] || FileError_exit
     [[ $# -lt 1 ]] && Wrong_exit
 
     list | grep "$1"
 }
 
 function add() {
+    [[ -w "$filename" ]] || FileError_exit
     [[ $# -lt 3 ]] && Wrong_exit
     echo "Not yet implemented"
 }
 
 function delete() {
+    [[ -w "$filename" ]] || FileError_exit
     [[ $# -lt 2 ]] && Wrong_exit
+
     echo "Not yet implemented"
 }
 
@@ -127,8 +133,6 @@ action=""
 action_args=""
 
 args "$@"
-
-[[ -w "$filename" ]] || FileError_exit
 
 case $action in
     listar )  action_function=list ;;
