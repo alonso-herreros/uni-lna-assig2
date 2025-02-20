@@ -37,6 +37,10 @@ Acciones:
         Elimina el registro cuyo número es <n>
 "
 
+# Decided to make the base functions do just one thing.
+# Since the most frequent use case is exiting right after, I added wrapper
+# functions to also exit with the corresponding exit code.
+
 function Help() {
     echo "$USAGE"
 }
@@ -70,6 +74,9 @@ function args() {
     # Parses args. May exit on errors or if the --help option is passed
 
     # --- Options and flags ---
+
+    # I'm using getopt to allow options after (or even between) positional
+    # arguments
     local options=$(getopt -o "$OPTSTRING" --long "$OPTSTRING_LONG" -- "$@")
     eval set -- "$options"
 
@@ -89,7 +96,7 @@ function args() {
     # --- Positional arguments ---
     action="$1"
     shift
-    action_args=("$@")
+    action_args=("$@") # Must be a list to pass it around properly later
 }
 
 # ===== Specific functionality =====
@@ -97,6 +104,7 @@ function args() {
 function list() {
     [[ -r "$filename" ]] || FileError_exit
 
+    # Print line number and content, with semicolons replaced by tabs
     awk '{gsub(";","\t"); print NR ":" $0}' $filename
 }
 
@@ -104,12 +112,12 @@ function filter() {
     [[ $# -eq 1 ]] && validate_date "$1" || Wrong_exit
     [[ -r "$filename" ]] || FileError_exit
 
+    # Filter by the argument given, which we already checked for format
     list | grep "$1"
 }
 
 function add() {
-    # Used to check both separately, but they give the same error anyway
-    # Thank you, operator precedence
+    # Used to check both separately, but they give the same error anyway...
     [[ $# -eq 3 ]] && validate_date "$1" || Wrong_exit
     touch "$filename" || FileError_exit
 
@@ -165,6 +173,3 @@ case $action in
 
     *       ) Wrong_exit ;; # This also serves as a check for lack of action
 esac
-
-# Call the function we got earlier with its arguments
-# $action_function "${action_args[@]}"
