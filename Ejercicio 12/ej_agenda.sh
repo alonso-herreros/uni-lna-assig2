@@ -3,6 +3,9 @@
 # ===== Constants =====
 DEFAULT_FILENAME="agenda.txt"
 
+OPTSTRING="hf:"
+OPTSTRING_LONG="help,file:"
+
 # ===== Help =====
 USAGE="
 Uso: $0 [OPCIONES] <ACCIÓN> [<ARGUMENTOS>]
@@ -66,30 +69,27 @@ function args() {
     # Parses args. May exit on errors or if the --help option is passed
     [[ $# -eq 0 ]] && Wrong_exit
 
+    # --- Options and flags ---
+    local options=$(getopt -o "$OPTSTRING" --long "$OPTSTRING_LONG" -- "$@")
+    eval set -- "$options"
+
+    # Most people use 'while true', but I don't trust myself
     while [[ $# -ne 0 ]]; do
         case "$1" in
+            -h | --help ) Help_exit;;
 
-            -f | --file )
-                [[ $# -lt 2 ]] && Wrong_exit
-                filename="$2"
-                shift 2
-                ;;
+            # If the value is wrong, so be it. We'll notice.
+            -f | --file ) filename="$2"; shift 2;;
 
-            -h | --help )
-                Help_exit ;;
-
-            listar | filtrar | agregar | borrar )
-                action="$1"
-                shift
-                action_args=("$@")
-                break
-                ;;
-
-            * )
-                Wrong_exit ;;
-
+             # End of options
+            -- ) shift; break;;
         esac
     done
+
+    # --- Positional arguments ---
+    action="$1"
+    shift
+    action_args=("$@")
 }
 
 # ===== Specific functionality =====
