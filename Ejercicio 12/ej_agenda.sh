@@ -120,10 +120,10 @@ action_args=""
 args "$@"
 
 case $action in
-    listar )  $action_function=list ;;
-    filtrar ) $action_function=filter ;;
-    agregar ) $action_function=add ;;
-    borrar )  $action_function=delete ;;
+    listar )  action_function=list ;;
+    filtrar ) action_function=filter ;;
+    agregar ) action_function=add ;;
+    borrar )  action_function=delete ;;
     * ) Wrong_exit ;;
 esac
 
