@@ -113,7 +113,7 @@ function filter() {
     [[ -r "$filename" ]] || FileError_exit
 
     # Filter by the argument given, which we already checked for format
-    list | grep "$1"
+    list | grep "^[0-9]\+:$1"
 }
 
 function add() {
