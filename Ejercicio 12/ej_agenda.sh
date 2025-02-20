@@ -111,7 +111,14 @@ function filter() {
 function add() {
     [[ -w "$filename" ]] || FileError_exit
     [[ $# -lt 3 ]] && Wrong_exit
-    echo "Not yet implemented"
+
+    date="$1"
+    event="$2"
+    comment="$3"
+
+    validate_date $date || Wrong_exit
+
+    echo "$date;$event;$comment" >> "$filename"
 }
 
 function delete() {
