@@ -107,7 +107,7 @@ function delete() {
 }
 
 function validate_date() {
-    date "+%d/%m/%Y" -d "$1" >/dev/null 2>&1
+    [[ "$1" =~ ^([0-9]{2}/){2}[0-9]{4}$ ]] && date -d "$1" >/dev/null 2>&1
 }
 
 # ===== Main flow =====
