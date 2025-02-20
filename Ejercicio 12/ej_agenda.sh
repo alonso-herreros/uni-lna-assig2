@@ -129,6 +129,10 @@ function delete() {
     echo "Not yet implemented"
 }
 
+function validate_date() {
+    date "+%d/%m/%Y" -d "$1" >/dev/null 2>&1
+}
+
 # ===== Main flow =====
 
 # Variables
