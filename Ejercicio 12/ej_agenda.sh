@@ -67,9 +67,7 @@ function args() {
                 ;;
 
             -h | --help )
-                Help
-                exit 0
-                ;;
+                Help_exit ;;
 
             listar | filtrar | agregar | borrar )
                 action="$1"
@@ -79,9 +77,7 @@ function args() {
                 ;;
 
             * )
-                Wrong
-                exit 1
-                ;;
+                Wrong_exit ;;
 
         esac
     done
