@@ -100,7 +100,7 @@ function list() {
 }
 
 function filter() {
-    [[ $# -eq 1 ]] || Wrong_exit
+    [[ $# -eq 1 ]] && validate_date "$1" || Wrong_exit
     [[ -r "$filename" ]] || FileError_exit
 
     list | grep "$1"
