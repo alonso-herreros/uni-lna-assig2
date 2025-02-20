@@ -81,7 +81,7 @@ function args() {
             listar | filtrar | agregar | borrar )
                 action="$1"
                 shift
-                action_args="$@"
+                action_args=("$@")
                 break
                 ;;
 
@@ -149,4 +149,4 @@ case $action in
     * ) Wrong_exit ;;
 esac
 
-$action_function "$action_args"
+$action_function "${action_args[@]}"
