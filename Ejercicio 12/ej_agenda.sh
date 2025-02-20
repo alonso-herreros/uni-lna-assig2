@@ -2,6 +2,7 @@
 
 # ===== Constants =====
 DEFAULT_FILENAME="agenda.txt"
+DATE_PATTERN="[0-9]{2}/[0-9]{2}/[0-9]{2}" # dd/mm/yy
 
 OPTSTRING="hf:"
 OPTSTRING_LONG="help,file:"
@@ -129,7 +130,7 @@ function delete() {
         # Simply delete that line
         sed -i "${key}d" $filename
 
-    elif [[ "$mode" == "fecha" && "$key" =~ ^([0-9]{2}/){2}[0-9]{4}$ ]]; then
+    elif [[ "$mode" == "fecha" && "$key" =~ ^$DATE_PATTERN$ ]]; then
         # Delete the line starting with that date. Note that, due to having
         # slashes in $key, instead of using the standard / delimiter, I'm
         # using the custom | delimiter
@@ -143,7 +144,7 @@ function delete() {
 }
 
 function validate_date() {
-    [[ "$1" =~ ^([0-9]{2}/){2}[0-9]{4}$ ]] && date -d "$1" >/dev/null 2>&1
+    [[ "$1" =~ ^$DATE_PATTERN$ ]] && date -d "$1" >/dev/null 2>&1
 }
 
 # ===== Main flow =====
