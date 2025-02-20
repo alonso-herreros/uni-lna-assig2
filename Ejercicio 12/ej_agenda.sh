@@ -96,7 +96,7 @@ function args() {
 function list() {
     [[ -r "$filename" ]] || FileError_exit
 
-    cat $filename | sed 's/;/\t/g'
+    awk '{gsub(";","\t"); print NR ":" $0}' $filename
 }
 
 function filter() {
