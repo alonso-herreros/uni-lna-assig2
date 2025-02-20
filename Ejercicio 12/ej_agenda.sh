@@ -140,12 +140,15 @@ action_args=""
 
 args "$@"
 
+# Resolve action 'names' to their functions, and call them
 case $action in
-    listar )  action_function=list ;;
-    filtrar ) action_function=filter ;;
-    agregar ) action_function=add ;;
-    borrar )  action_function=delete ;;
-    * ) Wrong_exit ;;
+    listar  ) list;;
+    filtrar ) filter "${action_args[@]}";;
+    agregar ) add    "${action_args[@]}";;
+    borrar  ) delete "${action_args[@]}";;
+
+    *       ) Wrong_exit ;; # This also serves as a check for lack of action
 esac
 
-$action_function "${action_args[@]}"
+# Call the function we got earlier with its arguments
+# $action_function "${action_args[@]}"
