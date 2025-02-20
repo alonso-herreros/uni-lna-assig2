@@ -102,15 +102,15 @@ function list() {
 }
 
 function filter() {
-    [[ -r "$filename" ]] || FileError_exit
     [[ $# -lt 1 ]] && Wrong_exit
+    [[ -r "$filename" ]] || FileError_exit
 
     list | grep "$1"
 }
 
 function add() {
-    [[ -w "$filename" ]] || FileError_exit
     [[ $# -lt 3 ]] && Wrong_exit
+    touch "$filename" || FileError_exit
 
     date="$1"
     event="$2"
@@ -122,8 +122,8 @@ function add() {
 }
 
 function delete() {
-    [[ -w "$filename" ]] || FileError_exit
     [[ $# -lt 2 ]] && Wrong_exit
+    [[ -w "$filename" ]] || FileError_exit
 
     echo "Not yet implemented"
 }
