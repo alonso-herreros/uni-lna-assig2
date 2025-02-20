@@ -37,21 +37,31 @@ function Help() {
     echo "$USAGE"
 }
 
+function Help_exit() {
+    Help
+    exit 0
+}
+
 function Wrong() {
     echo "Uso incorrecto. Prueba a usar '$0 --help'"
+}
+
+function Wrong_exit() {
+    Wrong
+    exit 1
 }
 
 # ===== Argument parsing =====
 
 function args() {
     # Parses args. May exit on errors or if the --help option is passed
-    [[ $# -eq 0 ]] && { Wrong; exit 1; }
+    [[ $# -eq 0 ]] && Wrong_exit
 
     while [[ $# -ne 0 ]]; do
         case "$1" in
 
             -f | --file )
-                [[ $# -lt 2 ]] && { Wrong; exit 1; }
+                [[ $# -lt 2 ]] && Wrong_exit
                 filename="$2"
                 shift 2
                 ;;
@@ -68,21 +78,21 @@ function args() {
                 ;;
 
             filtrar )
-                [[ $# -lt 2 ]] && { Wrong; exit 1; }
+                [[ $# -lt 2 ]] && Wrong_exit
                 action=filter
                 shift
                 action_args="$@"
                 ;;
 
             agregar )
-                [[ $# -lt 4 ]] && { Wrong; exit 1; }
+                [[ $# -lt 4 ]] && Wrong_exit
                 action=add
                 shift
                 action_args="$@"
                 ;;
 
             borrar )
-                [[ $# -lt 3 ]] && { Wrong; exit 1; }
+                [[ $# -lt 3 ]] && Wrong_exit
                 action=delete
                 shift
                 action_args="$@"
@@ -101,10 +111,11 @@ function args() {
 
 function list() {
     cat $filename
+    # TODO: prettify output
 }
 
 function filter() {
-    [[ $# -lt 1 ]] && { echo "Internal error"; exit 1; }
+    [[ $# -lt 1 ]] && Wrong_exit
 
     list | grep "$1"
 }
@@ -114,6 +125,7 @@ function add() {
 }
 
 function delete() {
+    [[ $# -lt 2 ]] && Wrong_exit
     echo "Not yet implemented"
 }
 
