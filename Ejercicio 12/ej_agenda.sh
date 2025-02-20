@@ -67,7 +67,6 @@ function FileError_exit() {
 
 function args() {
     # Parses args. May exit on errors or if the --help option is passed
-    [[ $# -eq 0 ]] && Wrong_exit
 
     # --- Options and flags ---
     local options=$(getopt -o "$OPTSTRING" --long "$OPTSTRING_LONG" -- "$@")
