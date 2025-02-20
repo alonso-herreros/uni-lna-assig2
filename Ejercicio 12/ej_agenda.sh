@@ -117,10 +117,29 @@ function add() {
 }
 
 function delete() {
-    [[ $# -eq 3 ]] || Wrong_exit
+    [[ $# -eq 2 ]] || Wrong_exit
     [[ -w "$filename" ]] || FileError_exit
 
-    echo "Not yet implemented"
+    # Assigned to names for clarity
+    mode=$1
+    key=$2
+
+    # Check the mode, and check that the key argument is as expected
+    if [[ "$mode" == "registro" && "$key" =~ ^[0-9]+$ ]]; then
+        # Simply delete that line
+        sed -i "${key}d" $filename
+
+    elif [[ "$mode" == "fecha" && "$key" =~ ^([0-9]{2}/){2}[0-9]{4}$ ]]; then
+        # Delete the line starting with that date. Note that, due to having
+        # slashes in $key, instead of using the standard / delimiter, I'm
+        # using the custom | delimiter
+        sed -i "\|^$key;|d" $filename
+
+    # Anything that doesn't fall into the two double checks above is wrong
+    else
+        Wrong_exit
+
+    fi
 }
 
 function validate_date() {
