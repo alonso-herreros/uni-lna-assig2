@@ -42,11 +42,11 @@ function Wrong_exit() {
 }
 
 function FileError() {
-    echo "El fichero '$filename' no existe o no tienes los permisos necesarios"
+    echo "El fichero '$1' no existe o no tienes los permisos necesarios"
 }
 
 function FileError_exit() {
-    FileError
+    FileError "$1"
     exit 1
 }
 
