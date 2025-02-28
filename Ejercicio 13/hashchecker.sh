@@ -68,7 +68,7 @@ function args() {
             -h | --help ) Help_exit;;
 
             # Existence and permissions will be checked later
-            -f | --file ) filename="$2"; shift 2;;
+            -f | --file ) checksums_file="$2"; shift 2;;
 
             # Actions
             -n | --new )
@@ -91,7 +91,7 @@ function args() {
 # ==== Main flow ====
 
 # Options. Just listing them here, since there are no defaults
-filename=
+checksums_file=
 action=
 dirs=
 
