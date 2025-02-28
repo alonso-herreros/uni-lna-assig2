@@ -116,7 +116,7 @@ targets=
 # Parse args and set options
 args "$@"
 
-[[ -z "$check_checksums_file" || -z "$action" ]] && Wrong_exit
+[[ -z "$checksums_file" || -z "$action" ]] && Wrong_exit
 
 case "$action" in
     new) new_checksums_file;;
