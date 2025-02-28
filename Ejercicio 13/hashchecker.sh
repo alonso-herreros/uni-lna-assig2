@@ -62,6 +62,7 @@ function new_checksums_file() {
 
 function check_checksums_file () {
     # File errors will be reported automatically if there's a problem
+    [[ -r "$checksums_file" ]] || FileError_exit "$checksums_file"
 
     if sha256sum -c "$checksums_file" >/dev/null 2>&1; then
         echo "No se han detectado cambios"
