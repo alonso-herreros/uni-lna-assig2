@@ -54,7 +54,21 @@ function FileError_exit() {
 
 # ==== Specifics ====
 
+function new_checksums_file() {
+    # File errors will be reported automatically if there's a problem
 
+    find "${targets[@]}" -type f -exec sha256sum "{}" \; > "$checksums_file"
+}
+
+function check_checksums_file () {
+    # File errors will be reported automatically if there's a problem
+
+    if sha256sum -c "$checksums_file" >/dev/null 2>&1; then
+        echo "No se han detectado cambios"
+    else
+        echo "Se han detectado cambios"
+    fi
+}
 
 # ==== Argument parsing ====
 
@@ -101,3 +115,8 @@ targets=
 
 # Parse args and set options
 args "$@"
+
+case "$action" in
+    new) new_checksums_file;;
+    check) check_checksums_file;;
+esac
