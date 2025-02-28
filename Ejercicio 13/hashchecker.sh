@@ -2,25 +2,26 @@
 
 # ==== Usage ====
 USAGE="
-Uso:    $0 -f <FICHERO> <COMANDO>
+Uso:    $0 -f <FICHERO> <COMANDO> [DIRECTORIOS]
         $0 -h
 
 COMANDOS
 
     Se debe seleccionar un único comando en la ejecución del script.
 
-  -n, --new <DIRS>      Establece el modo de creación sobre el directorio o los
-                        directorios especificados.
-  -c, --check           Establece el modo de comprobación
-  -h, --help            Muestra este mensaje y no realiza ninguna otra operación.
+  -n, --new             Establece el modo de creación sobre el directorio o los
+                        directorios especificados como parámetros posicionales.
+  -c, --check           Establece el modo de comprobación.
+  -h, --help            Muestra este mensaje y no realiza ninguna operación.
 
 OPCIONES
 
-  -f, --file <FICHERO>  Muestra este mensaje. Esta opción es obligatoria
+  -f, --file <FICHERO>  Selecciona el fichero de resúmenes para leer/escribir.
+                        Esta opción es obligatoria
 "
 
-OPTSTRING="hf:n:c"
-OPTSTRING_LONG="help,file:,new:,check"
+OPTSTRING="hf:nc"
+OPTSTRING_LONG="help,file:,new,check"
 
 
 function Help() {
@@ -74,8 +75,7 @@ function args() {
             -n | --new )
                 [[ -n "$action" ]] && Wrong_exit # Mutually exclusive options
                 action="new"
-                dirs="$2"
-                shift 2;;
+                shift;;
 
             -c | --check ) [ -action ]
                 [[ -n "$action" ]] && Wrong_exit # Mutually exclusive options
@@ -86,6 +86,10 @@ function args() {
             --) shift; break;;
         esac
     done
+
+    # All positional parameters are assumed to be the target dirs for the
+    # 'new' command
+    targets=("$@");
 }
 
 # ==== Main flow ====
@@ -93,7 +97,7 @@ function args() {
 # Options. Just listing them here, since there are no defaults
 checksums_file=
 action=
-dirs=
+targets=
 
 # Parse args and set options
-args "$0" "$@"
+args "$@"
