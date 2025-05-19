@@ -45,7 +45,7 @@ cat <<EOF
 Hola $USER!
 
 Soy $0, mi PID es $$
-el PID de mi proceso padre es $(ps -o ppid= $$)
+el PID de mi proceso padre es $PPID
 Ahora es: $(date)
 En UTC: $(date -u)
 
