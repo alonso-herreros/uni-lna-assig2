@@ -60,9 +60,10 @@ for ((i=1; i<=$#; i++)); do
 done
 
 echo -n "En orden inverso y como array con comas: {"
+# Reusamos la i del bucle anterior
 for ((i--; i>0; i--)); do
     echo -n "${!i}"
-    [[ $i -gt 1 ]] && echo -n ", " || break;
+    [[ $i -gt 1 ]] && echo -n ", "
 done
 echo "}"
 echo ""
