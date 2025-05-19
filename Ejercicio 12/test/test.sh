@@ -50,7 +50,7 @@ function run_standard_test() {
 
     fi
 
-    rm $DEFAULT_FILENAME $OUTPUT_FILENAME
+    rm "$DEFAULT_FILENAME" "$OUTPUT_FILENAME"
 }
 
 function run_options_test() {

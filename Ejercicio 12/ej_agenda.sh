@@ -105,7 +105,7 @@ function list() {
     [[ -r "$filename" ]] || FileError_exit
 
     # Print line number and content, with semicolons replaced by tabs
-    awk '{gsub(";","\t"); print NR ":" $0}' $filename
+    awk '{gsub(";","\t"); print NR ":" $0}' "$filename"
 }
 
 function filter() {
@@ -136,13 +136,13 @@ function delete() {
     # Check the mode, and check that the key argument is as expected
     if [[ "$mode" == "registro" && "$key" =~ ^[0-9]+$ ]]; then
         # Simply delete that line
-        sed -i "${key}d" $filename
+        sed -i "${key}d" "$filename"
 
     elif [[ "$mode" == "fecha" && "$key" =~ ^$DATE_PATTERN$ ]]; then
         # Delete the line starting with that date. Note that, due to having
         # slashes in $key, instead of using the standard / delimiter, I'm
         # using the custom | delimiter
-        sed -i "\|^$key;|d" $filename
+        sed -i "\|^$key;|d" "$filename"
 
     # Anything that doesn't fall into the two double checks above is wrong
     else
