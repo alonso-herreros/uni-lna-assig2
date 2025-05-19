@@ -92,7 +92,7 @@ function args() {
                 action="new"
                 shift;;
 
-            -c | --check ) [ -action ]
+            -c | --check )
                 [[ -n "$action" ]] && Wrong_exit # Mutually exclusive options
                 action="check"
                 shift;;
